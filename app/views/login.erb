@@ -1,0 +1,13 @@
+<h2>Log In</h2>
+<% if session[:log_in_failed?] == true %>
+    <p>Log in failed. Please re-enter your email and password.</p>
+    <% session[:log_in_failed?] == false %>
+<% end %>
+<form action="/login" method="post">
+<label for="email">Email</label>
+<input type="text" name="user[email]" id="email"><br>
+<label for="password">Password</label>
+<input type="password" name="user[password]" id="password"><br>
+<input type="submit" name="log_in" id="log_in" value="Log In"><br>
+</form>
+<p>Don't have an account? <a href="/signup">Click here to sign up.</a></p>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Kon Jo Reservation System</title>
+  </head>
+  <body>
+
+    <div class="container">
+        <h1>Welcome to the Kon Jo Karate Online Reservation System</h1>
+        <% if Helpers.is_logged_in?(session) %>
+          <% user = Helpers.current_user(session) %>
+          <table>
+            <tr>
+              <td><a href="/lessons">Classes</a></td>
+              <td><a href="/locations">Locations</a></td>
+              <td><a href="/students">
+                <% if user.class == Parent %>
+                  Kids</a></td>
+                  <td><a href="/instructors">Instructors</a></td>
+                  <td><a href="/parents/<%= user.id %>/edit">
+                <% elsif user.class == Instructor %>
+                  Students</a></td>
+                  <td><a href="/parents">Parents</a></td>
+                  <td><a href="/instructors/<%= user.id %>/edit">
+                <% end %>
+              Edit Account</a></td>
+              <td><a href="/login">Home</a></td>
+            </tr>
+          </table>
+        <% end %>      
+        <%= yield %>
+        <% if Helpers.is_logged_in?(session) %>
+            <p>
+            <form action="/logout" method="post">
+                <input type="submit" name="logout" value="Logout">
+            </form>
+            </p>
+        <% end %>
+    
+    </div>
+
+  </body>
+</html>

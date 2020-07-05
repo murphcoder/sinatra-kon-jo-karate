@@ -3,4 +3,5 @@ class Student < ActiveRecord::Base
     has_many :lesson_students
     has_many :lessons, through: :lesson_students
     has_many :instructors, through: :lessons
+    has_many :locations, through: :lessons
 end

@@ -1,0 +1,28 @@
+<h2><%= @parent.name %></h2>
+<% if @parent.students.empty? %>
+    <p><%= @parent.name %> currently has no children in our system.</p>
+<% else %>
+    <h3><%= @parent.name %>'s Schedule</h3>
+    <ul>
+    <% @parent.students.each do |student| %>
+        <li>
+        <a href="/students/<%= student.id %>"><%= student.name %></a>'s Classes<br>
+        <ul>
+        <% lesson_array = student.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+        <% lesson_array.each do |lesson| %>
+            <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+        <% end %>
+        </ul>
+        </li>
+    <% end %>
+    </ul>
+<% end %>
+<h3><%= @parent.name %>'s Information</h3>
+Name : <%= @parent.name %><br>
+Email : <%= @parent.email %><br>
+Address : <%= @parent.address %><br>
+Cell Phone : <%= @parent.cell_phone %><br>
+<br>
+<a href="/parents/<%= @parent.id %>/edit">
+Edit Information
+</a>

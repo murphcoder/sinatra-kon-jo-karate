@@ -1,0 +1,51 @@
+<% if @user == @parent %>
+    <h2>Edit Your Information</h2>
+<% else %>
+    <h2>Edit <%= @parent.name %>'s Information</h2>
+<% end %>
+<form action="/parents/<%= @parent.id %>" method="post">
+<input id="hidden" type="hidden" name="_method" value="patch">
+<table>
+    <tr>
+    <td><label for="username">Name</label></td>
+    <td><input type="text" name="parent[name]" id="name" value="<%= @parent.name %>"><br></td>
+    </tr>
+    <tr>
+    <td><label for="email">Email</label></td>
+    <td><input type="text" name="parent[email]" id="email" value="<%= @parent.email %>"><br></td>
+    </tr>
+    <% if @user == @parent %>
+        <tr>
+        <td><label for="password">New Password</label></td>
+        <td><input type="password" name="parent[password]" id="password"><br></td>
+        </tr>
+    <% end %>
+    <tr>
+    <td><label for="cell_phone">Cell Phone</label></td>
+    <td><input type="text" name="parent[cell_phone]" id="cell_phone" value="<%= @parent.cell_phone %>"><br></td>
+    </tr>
+    <tr>
+    <td><label for="address">Address</label></td>
+    <td><textarea id="address" name="parent[address]" rows="4" cols="50">
+    <%= @parent.address %>
+    </textarea><br></td>
+    </tr>
+</table>
+<h4>Children Enrolled</h4>
+<ul>
+<% @parent.students.each do |student| %>
+    <li>
+        <input type="checkbox" id="student<%= student.id %>" name="students[][id]" value="<%= student.id %>" checked="checked">
+        <label for="student<%= student.id %>"><a href="/students/<%= student.id %>"><%= student.name %></a></label>
+    </li>
+<% end %>
+</ul>
+<p>Add students on the next page.</p>
+<input type="submit" name="edit" id="edit" value="Update"><br>
+</form>
+<p>
+    <form action="/parents/<%= @parent.id %>" method="post">
+        <input id="hidden" type="hidden" name="_method" value="delete">
+        <input type="submit" name="delete" value="Delete This Account">
+    </form>
+</p>
