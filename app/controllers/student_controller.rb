@@ -3,6 +3,7 @@ class StudentController < ApplicationController
     get '/students' do
         if Helpers.is_logged_in?(session)
             @user = Helpers.current_user(session)
+            @students = Student.all
             erb :'/students/students'
         else
             redirect to 'login'

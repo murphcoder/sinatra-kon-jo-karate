@@ -1,0 +1,16 @@
+<h2>Classes At <%= @location.name %></h2>
+<h3><%= @location.address %></h3>
+<ul>
+<% lesson_array = @location.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+<% lesson_array.each do |lesson| %>
+    <li><a href="/lessons/<%= lesson.id %>"><%= lesson.start_time.strftime("%-l:%M %p") %> to <%= lesson.end_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %>
+    <% if lesson.parents.include?(@user) || lesson.instructors.include?(@user) %>
+        *
+    <% end %>
+    </a></li>
+<% end %>
+</ul>
+<p>* One of your classes</p>
+<% if @user.class == Instructor && @user.admin? %>
+    <p><a href="/locations/<%= @location.id %>/edit">Edit This Location</a></p>
+<% end %>

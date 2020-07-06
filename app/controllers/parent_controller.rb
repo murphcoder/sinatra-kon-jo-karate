@@ -3,6 +3,7 @@ class ParentController < ApplicationController
     get '/parents' do
         @user = Helpers.current_user(session)
         if @user.class == Instructor
+            @parents = Parent.all
             erb :'/parents/parents'
         else
             'You are not permitted to view this page.'

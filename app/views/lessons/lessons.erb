@@ -1,0 +1,19 @@
+<h2>Your Classes</h2>
+<ul>
+<% lesson_array = @user.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+<% lesson_array.each do |lesson| %>
+    <% if lesson.parents.include?(@user) || lesson.instructors.include?(@user) %>
+        <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+    <% end %>
+<% end %>
+</ul>
+<% if @user.class == Instructor && @user.admin? %>
+    <h2>All Classes</h2>
+    <ul>
+    <% lesson_array = @lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+    <% lesson_array.each do |lesson| %>
+        <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+    <% end %>
+    </ul>
+    <p><a href="/lessons/new">Add Class</a></p>
+<% end %>

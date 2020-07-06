@@ -3,4 +3,5 @@ class Parent < ActiveRecord::Base
     has_many :students
     has_many :lessons, through: :students
     has_many :instructors, through: :lessons
+    has_many :locations, through: :lessons
 end

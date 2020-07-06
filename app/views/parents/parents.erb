@@ -4,3 +4,11 @@
     <li><a href="/parents/<%= parent.id %>"><%= parent.name %></a></li>
 <% end %>
 </ul>
+<% if @user.admin? %>
+    <h2>All Parents</h2>
+    <ul>
+    <% @parents.each do |parent| %>
+        <li><a href="/parents/<%= parent.id %>"><%= parent.name %></a></li>
+    <% end %>
+    </ul>
+<% end %>

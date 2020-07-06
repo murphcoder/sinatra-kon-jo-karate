@@ -8,4 +8,12 @@
     <li><a href="/students/<%= student.id %>"><%= student.name %></a></li>
 <% end %>
 </ul>
+<% if @user.class == Instructor && @user.admin? %>
+    <h2>All Students</h2>
+    <ul>
+    <% @students.each do |student| %>
+        <li><a href="/students/<%= student.id %>"><%= student.name %></a></li>
+    <% end %>
+    </ul>
+<% end %>
 <p><a href="/students/new">Add Student</a></p>

@@ -1,0 +1,117 @@
+<h2>Create New Lesson</h2>
+<form action="/lessons/new" method="post">
+<table>
+<tr>
+<td><label for="location">Select Location : </label></td>
+<td><select name="lesson[location]" id ="location">
+    <option value="new">New Location</option>
+    <% @locations.each do |location| %>
+        <option value="<%= location.id %>"><%= location.name %></option>
+    <% end %>
+</select></td>
+</tr>
+<tr>
+<td><label for="start_time">Start Time : </label></td>
+<td><select name="lesson[start_time]" id="start_time">
+    <% start_time = Time.new(2000, 01, 01, 0, 0, 0, "+00:00") %>
+    <% until start_time == Time.new(2000, 01, 02, 0, 0, 0, "+00:00") do %>
+        <option value="<%= start_time %>"><%= start_time.strftime("%-l:%M %p") %></option>
+        <% start_time += 900 %>
+    <% end %>
+</select></td>
+</tr>
+<tr>
+<td><label for="end_time">End Time : </label></td>
+<td><select name="lesson[end_time]" id="end_time">
+    <% end_time = Time.new(2000, 01, 01, 0, 0, 0, "+00:00") %>
+    <% until end_time == Time.new(2000, 01, 02, 0, 0, 0, "+00:00") do %>
+        <option value="<%= end_time %>"><%= end_time.strftime("%-l:%M %p") %></option>
+        <% end_time += 900 %>
+    <% end %>
+</select></td>
+</tr>
+<tr>
+<td><label for="start_year">Start Date : </label></td>
+<td><select name="lesson[date][start_year]" id="start_year">
+    <% start_year = 2020 %>
+    <% until start_year == 2050 %>
+        <option value="<%= start_year %>"><%= start_year %></option>
+        <% start_year += 1 %>
+    <% end %>
+</select>
+<select name="lesson[date][start_month]">
+    <% start_month = DateTime.new(2000, 01, 01) %>
+    <% until start_month == DateTime.new(2001, 01, 01) %>
+        <option value="<%= start_month.month %>"><%= start_month.strftime("%B") %></option>
+        <% start_month = start_month >> 1 %>
+    <% end %>
+</select>
+<select name="lesson[date][start_day]">
+    <% start_day = 1 %>
+    <% until start_day == 32 %>
+        <option value="<%= start_day %>"><%= start_day %></option>
+        <% start_day += 1 %>
+    <% end %>
+</select>
+</td>
+</tr>
+<tr>
+<td><label for="start_year">End Date : </label></td>
+<td><select name="lesson[date][end_year]" id="end_year">
+    <% end_year = 2020 %>
+    <% until end_year == 2050 %>
+        <option value="<%= end_year %>"><%= end_year %></option>
+        <% end_year += 1 %>
+    <% end %>
+</select>
+<select name="lesson[date][end_month]">
+    <% end_month = DateTime.new(2000, 01, 01) %>
+    <% until end_month == DateTime.new(2001, 01, 01) %>
+        <option value="<%= end_month.month %>"><%= end_month.strftime("%B") %></option>
+        <% end_month = end_month >> 1 %>
+    <% end %>
+</select>
+<select name="lesson[date][end_day]">
+    <% end_day = 1 %>
+    <% until end_day == 32 %>
+        <option value="<%= end_day %>"><%= end_day %></option>
+        <% end_day += 1 %>
+    <% end %>
+</select>
+</td>
+</tr>
+<tr>
+</table>
+<h3>Add New Location</h3>
+<table>
+<tr>
+<td><label for="location_name">Name</label></td>
+<td><input type="text" name="lesson[new_location][name]" id="location_name"></td>
+</tr>
+<tr>
+    <td><label for="location_address">Address</label></td>
+    <td>
+    <textarea id="location_address" name="lesson[new_location][address]" rows="4" cols="50"></textarea>
+    </td>
+</tr>
+</table>
+<h3>Select Instructors</h3>
+<ul>
+<% @instructors.each do |instructor| %>
+    <li>
+        <input type="checkbox" id="instructor<%= instructor.id %>" name="lesson[instructors][][id]" value="<%= instructor.id %>">
+        <label for="instructor<%= instructor.id %>"><a href="/instructors/<%= instructor.id %>"><%= instructor.name %></a></label>
+    </li>
+<% end %>
+</ul>
+<h3>Enroll Students</h3>
+<ul>
+<% @students.each do |student| %>
+    <li>
+        <input type="checkbox" id="student<%= student.id %>" name="lesson[students][][id]" value="<%= student.id %>">
+        <label for="student<%= student.id %>"><a href="/students/<%= student.id %>"><%= student.name %></a></label>
+    </li>
+<% end %>
+</ul>
+<input type="submit" name="create" id="create" value="Create Class"><br>
+</form>

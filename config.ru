@@ -7,5 +7,7 @@ end
 use Rack::MethodOverride
 use ParentController
 use StudentController
+use LocationController
+use LessonController
 ### use OtherController3
 run ApplicationController

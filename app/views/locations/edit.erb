@@ -1,0 +1,34 @@
+<h2>Edit Location</h2>
+<form action="/locations/<%= @location.id %>" method="post">
+<input id="hidden" type="hidden" name="_method" value="patch">
+<table>
+    <tr>
+        <td><label for="name">Name</label></td>
+        <td><input type="text" name="location[name]" id="name" value="<%= @location.name %>"></td>
+    </tr>
+    <tr>
+        <td><label for="address">Address</label></td>
+        <td>
+        <textarea id="address" name="location[address]" rows="4" cols="50"><%= @location.address %></textarea>
+        </td>
+    </tr>
+</table>
+<h3>Classes</h3>
+<ul>
+<% lesson_array = @location.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+<% lesson_array.each do |lesson| %>
+    <li>
+        <input type="checkbox" id="lesson<%= lesson.id %>" name="lessons[][id]" value="<%= lesson.id %>" checked="checked">
+        <label for="lesson<%= lesson.id %>"><a href="/lessons/<%= lesson.id %>"><%= lesson.start_time.strftime("%-l:%M %p") %> to <%= lesson.end_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></label>
+    </li>
+<% end %>
+</ul>
+<input type="submit" name="edit" id="edit" value="Update"><br>
+</form>
+<p><a href="/lessons/new">Add New Class</a></p>
+<p>
+    <form action="/locations/<%= @location.id %>" method="post">
+        <input id="hidden" type="hidden" name="_method" value="delete">
+        <input type="submit" name="delete" value="Delete This Location">
+    </form>
+</p>
