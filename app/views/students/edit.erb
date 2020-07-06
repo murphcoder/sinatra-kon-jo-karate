@@ -1,0 +1,63 @@
+<h2>Edit Student</h2>
+<table>
+<form action="/students/<%= @student.id %>" method="post">
+<input id="hidden" type="hidden" name="_method" value="patch">
+<tr>
+<td><label for="name">Name</label></td>
+<td><input type="text" name="student[name]" id="name" value="<%= @student.name %>"></td>
+</tr>
+<tr>
+<td><label for="age">Age</label></td>
+<td><input type="text" name="student[age]" id="age" value="<%= @student.age %>"></td>
+</tr>
+<tr>
+<td><label for="grade">Grade</label></td>
+<td><input type="text" name="student[grade]" id="grade" value="<%= @student.grade %>"></td>
+</tr>
+<tr>
+<td><label for="address">Address</label></td>
+<td><textarea id="address" name="student[address]" rows="4" cols="50">
+<% if @user.class == Parent %>
+<%= @user.address %>
+<% else %>
+<%= @student.address %>
+<% end %>
+</textarea></td>
+</tr>
+<tr>
+<td><label for="rank">Rank</label></td>
+<td><input type="text" name="student[rank]" id="rank" value="<%= @student.rank %>"></td>
+</tr>
+</table>
+<% if @user.class == Instructor %>
+    <h3>Edit Parent</h3>
+    <table>
+    <tr>
+    <td><label for="name">Name</label></td>
+    <td><input type="text" name="parent[name]" id="name" value="<%= @student.parent.name %>"></td>
+    </tr>
+    <tr>
+    <td><label for="email">Email</label></td>
+    <td><input type="text" name="parent[email]" id="email" value="<%= @student.parent.email %>"></td>
+    </tr>
+    <tr>
+    <td><label for="cell_phone">Cell Phone</label></td>
+    <td><input type="text" name="parent[cell_phone]" id="cell_phone" value="<%= @student.parent.cell_phone %>"></td>
+    </tr>
+    <tr>
+    <td><label for="address">Address</label></td>
+    <td>
+    <textarea id="address" name="parent[address]" rows="4" cols="50">
+    <%= @student.parent.address %>
+    </textarea></td>
+    </tr>
+    </table>
+<% end %>
+<input type="submit" name="edit" id="edit" value="Edit"><br>
+</form>
+<p>
+    <form action="/students/<%= @student.id %>" method="post">
+        <input id="hidden" type="hidden" name="_method" value="delete">
+        <input type="submit" name="delete" value="Delete This Student">
+    </form>
+</p>

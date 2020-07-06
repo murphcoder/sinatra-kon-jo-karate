@@ -28,6 +28,16 @@ class StudentController < ApplicationController
         end
     end
 
+    get '/students/:id/edit' do
+        @user = Helpers.current_user(session)
+        @student = Student.find(params[:id])
+        if @user.students.include?(@student) || @user.admin?
+            erb :'/students/edit'
+        else
+            'You are not permitted to view this page.'
+        end
+    end
+
     post '/students/new' do
         user = Helpers.current_user(session)
         student = Student.create(params[:student])
@@ -38,6 +48,20 @@ class StudentController < ApplicationController
             student.parent = user
         end
         redirect to "/students/#{student.id}"
+    end
+
+    patch '/students/:id' do
+        student = Student.update(params[:id], params[:student])
+        if params[:parent]
+            parent = student.parent
+            parent.update(params[:parent])
+        end
+        redirect to "/students/#{student.id}"
+    end
+
+    delete '/students/:id' do
+        Student.delete(params[:id])
+        redirect to '/login'
     end
 
 end
