@@ -1,0 +1,56 @@
+<h2>Create New Student</h2>
+<table>
+<form action="/students/new" method="post">
+<tr>
+<td><label for="name">Name</label></td>
+<td><input type="text" name="student[name]" id="name"></td>
+</tr>
+<tr>
+<td><label for="age">Age</label></td>
+<td><input type="text" name="student[age]" id="age"></td>
+</tr>
+<tr>
+<td><label for="grade">Grade</label></td>
+<td><input type="text" name="student[grade]" id="grade"></td>
+</tr>
+<tr>
+<td><label for="address">Address</label></td>
+<td><textarea id="address" name="student[address]" rows="4" cols="50">
+<% if @user.class == Parent %>
+    <%= @user.address %>
+<% end %>
+</textarea></td>
+</tr>
+<tr>
+<td><label for="rank">Rank</label></td>
+<td><input type="text" name="student[rank]" id="rank"></td>
+</tr>
+</table>
+<% if @user.class == Instructor %>
+    <h3>Add Parent</h3>
+    <table>
+    <tr>
+    <td><label for="name">Name</label></td>
+    <td><input type="text" name="parent[name]" id="name"></td>
+    </tr>
+    <tr>
+    <td><label for="email">Email</label></td>
+    <td><input type="text" name="parent[email]" id="email"></td>
+    </tr>
+    <tr>
+    <td><label for="password">Password</label></td>
+    <td><input type="password" name="parent[password]" id="password"></td>
+    </tr>
+    <tr>
+    <td><label for="cell_phone">Cell Phone</label></td>
+    <td><input type="text" name="parent[cell_phone]" id="cell_phone"></td>
+    </tr>
+    <tr>
+    <td><label for="address">Address</label></td>
+    <td><textarea id="address" name="parent[address]" rows="4" cols="50">
+    </textarea></td>
+    </tr>
+    </table>
+<% end %>
+<input type="submit" name="create" id="create" value="Create"><br>
+</form>

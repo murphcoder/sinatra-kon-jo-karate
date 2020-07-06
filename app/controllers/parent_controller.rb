@@ -1,5 +1,14 @@
 class ParentController < ApplicationController
 
+    get '/parents' do
+        @user = Helpers.current_user(session)
+        if @user.class == Instructor
+            erb :'/parents/parents'
+        else
+            'You are not permitted to view this page.'
+        end
+    end
+
     get '/parents/home' do
         @user = Helpers.current_user(session)
         if @user.class == Instructor
@@ -42,6 +51,13 @@ class ParentController < ApplicationController
 
     post '/parents/new' do
         parent = Parent.create(params[:parent])
+        if !params[:student][:name].empty?
+            if params[:student][:address].empty?
+                params[:student][:address] = parent.address
+            end
+            student = Student.create(params[:student])
+            parent.students << student
+        end
         redirect to "/parents/#{parent.id}"
     end
 
@@ -50,6 +66,10 @@ class ParentController < ApplicationController
         parent.students.clear
         params[:students].each do |child|
             parent.students << Student.find(child[:id])
+        end
+        if !params[:student][:name].empty?
+            student = Student.create(params[:student])
+            parent.students << student
         end
         parent.save
         if parent == Helpers.current_user(session)

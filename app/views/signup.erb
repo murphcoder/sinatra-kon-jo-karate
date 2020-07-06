@@ -1,15 +1,27 @@
 <h2>Sign Up Below</h2>
 <form action="/signup" method="post">
-<label for="username">Name</label>
-<input type="text" name="parent[name]" id="name"><br>
-<label for="email">Email</label>
-<input type="text" name="parent[email]" id="email"><br>
-<label for="password">Password</label>
-<input type="password" name="parent[password]" id="password"><br>
-<label for="cell_phone">Cell Phone</label>
-<input type="text" name="parent[cell_phone]" id="cell_phone"><br>
-<label for="address">Address</label>
-<textarea id="address" name="parent[address]" rows="4" cols="50">
-</textarea><br>
-<input type="submit" name="sign_up" id="sign_up" value="Sign Up"><br>
+<table>
+<tr>
+<td><label for="username">Name</label></td>
+<td><input type="text" name="parent[name]" id="name"></td>
+</tr>
+<tr>
+<td><label for="email">Email</label></td>
+<td><input type="text" name="parent[email]" id="email"></td>
+</tr>
+<tr>
+<td><label for="password">Password</label></td>
+<td><input type="password" name="parent[password]" id="password"></td>
+</tr>
+<tr>
+<td><label for="cell_phone">Cell Phone</label></td>
+<td><input type="text" name="parent[cell_phone]" id="cell_phone"></td>
+</tr>
+<tr>
+<td><label for="address">Address</label></td>
+<td><textarea id="address" name="parent[address]" rows="4" cols="50">
+</textarea></td>
+</tr>
+</table>
+<input type="submit" name="sign_up" id="sign_up" value="Sign Up">
 </form>

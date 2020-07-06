@@ -6,6 +6,6 @@ end
 
 use Rack::MethodOverride
 use ParentController
-### use OtherController2
+use StudentController
 ### use OtherController3
 run ApplicationController

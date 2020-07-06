@@ -40,7 +40,33 @@
     </li>
 <% end %>
 </ul>
-<p>Add students on the next page.</p>
+<h3>Add New Student</h3>
+<table>
+<tr>
+<td><label for="name">Name</label></td>
+<td><input type="text" name="student[name]" id="name"></td>
+</tr>
+<tr>
+<td><label for="age">Age</label></td>
+<td><input type="text" name="student[age]" id="age"></td>
+</tr>
+<tr>
+<td><label for="grade">Grade</label></td>
+<td><input type="text" name="student[grade]" id="grade"></td>
+</tr>
+<tr>
+<td><label for="address">Address</label></td>
+<td><textarea id="address" name="student[address]" rows="4" cols="50">
+<% if @user.class == Parent %>
+    <%= @user.address %>
+<% end %>
+</textarea></td>
+</tr>
+<tr>
+<td><label for="rank">Rank</label></td>
+<td><input type="text" name="student[rank]" id="rank"></td>
+</tr>
+</table>
 <input type="submit" name="edit" id="edit" value="Update"><br>
 </form>
 <p>
