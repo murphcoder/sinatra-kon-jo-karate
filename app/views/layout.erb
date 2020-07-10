@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
     <title>Kon Jo Reservation System</title>
   </head>
   <body>
@@ -9,25 +10,30 @@
         <h1>Welcome to the Kon Jo Karate Online Reservation System</h1>
         <% if Helpers.is_logged_in?(session) %>
           <% user = Helpers.current_user(session) %>
-          <table>
+          <% if user.class == Parent %>
+            <h2 class="signup"><a href="/lessons/signup">Sign Up For Classes</a></h2>
+          <% end %>
+          <table class="nav">
             <tr>
               <td><a href="/lessons">Classes</a></td>
               <td><a href="/locations">Locations</a></td>
-              <td><a href="/students">
+              <td><a href="/instructors">Instructors</a></td>
                 <% if user.class == Parent %>
-                  Kids</a></td>
-                  <td><a href="/instructors">Instructors</a></td>
                   <td><a href="/parents/<%= user.id %>/edit">
                 <% elsif user.class == Instructor %>
-                  Students</a></td>
-                  <td><a href="/parents">Parents</a></td>
                   <td><a href="/instructors/<%= user.id %>/edit">
                 <% end %>
-              Edit Account</a></td>
+                Edit Account</a></td>
               <td><a href="/login">Home</a></td>
+              <% if user.class == Parent %>
+                <% unpaid = user.transactions.select {|t| t.paid? == false} %>
+                <% unpaid.each {|t| user.balance += t.cost} %>
+                <td><a href="/balance">Bill : $<%= user.balance %>.00</a></td>
+              <% end %>
             </tr>
           </table>
-        <% end %>      
+        <% end %> 
+      <div class="main">     
         <%= yield %>
         <% if Helpers.is_logged_in?(session) %>
             <p>
@@ -36,6 +42,7 @@
             </form>
             </p>
         <% end %>
+      </div>
     
     </div>
 

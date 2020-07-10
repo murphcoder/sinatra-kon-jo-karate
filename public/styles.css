@@ -1,0 +1,64 @@
+body {
+    background-color: lightblue;
+    font-family: fantasy;
+}
+
+a {
+    color: darkred;
+}
+
+h1 {
+    text-align: center;
+}
+
+.signup {
+    text-align: center;
+}
+
+.nav {
+    width: 100%;
+}
+
+.nav td {
+    text-align: center;
+    background-color: darkred;
+}
+
+.nav td a {
+    color: lightblue;
+}
+
+.main {
+    margin: auto;
+    width: 50%;
+}
+
+table.bill {
+    width: 100%;
+}
+
+.bill th {
+    background-color: black;
+    color: white;
+    border-collapse: collapse;
+}
+
+.bill th, .bill td {
+    text-align: left;
+}
+
+.bill .check {
+    text-align: center;
+}
+
+.bill .check.top input {
+    background-color: black;
+    color: white;
+    font-family: fantasy;
+    border: 0px;
+}
+
+.bill .price {
+    text-align: right;
+}
+

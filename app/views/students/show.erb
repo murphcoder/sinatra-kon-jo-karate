@@ -1,20 +1,11 @@
 <h2><%= @student.name %></h2>
+<h3>Parent : <a href="/parents/<%= @student.parent.id %>"><%= @student.parent.name %></a></h3>
+<h3>Classes</h3>
 <ul>
-<li>Age : <%= @student.age %></li>
-<li>Grade : <%= @student.grade %></li>
-<li>Address : <%= @student.address %></li>
-<li>Rank : <%= @student.rank %> Belt</li>
-<% if @user.class == Instructor %>
-    <li>Parent : <a href="/parents/<%= @student.parent.id %>"><%= @student.parent.name %></a></li>
+<% lesson_array = @student.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+<% lesson_array.each do |lesson| %>
+    <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
 <% end %>
-<li>Classes<br>
-    <ul>
-    <% lesson_array = @student.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
-    <% lesson_array.each do |lesson| %>
-        <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
-    <% end %>
-    </ul>
-</li>
 </ul>
 <a href="/students/<%= @student.id %>/edit">
 Edit Information

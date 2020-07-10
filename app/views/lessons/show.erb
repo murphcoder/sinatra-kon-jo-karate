@@ -1,6 +1,6 @@
 <h2><a href="/locations/<%= @lesson.location.id %>"><%= @lesson.location.name %></a></h2>
 <h2>Times : <%= @lesson.start_time.strftime("%-l:%M %p") %> to <%= @lesson.end_time.strftime("%-l:%M %p") %></h2>
-<h3>Dates : <%= @lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= @lesson.end_date.strftime("%A, %B %-d, %Y") %></h3>
+<h3>Dates : <%= @lesson.start_date.strftime("%B %-d, %Y") %> to <%= @lesson.end_date.strftime("%B %-d, %Y") %></h3>
 <h3>Instructors</h3>
 <ul>
 <% @lesson.instructors.each do |instructor| %>
@@ -13,7 +13,16 @@
     <li><a href="/students/<%= student.id %>"><%= student.name %></a></li>
 <% end %>
 </ul>
-<p>
 <% if @user.class == Instructor && @user.admin? %>
+    <p><a href="<%= @email_link %>">Email All Parents</a></p>
     <p><a href="/lessons/<%= @lesson.id %>/edit">Edit This Class</a></p>
 <% end %>
+<h3>Price</h3>
+<ul>
+<li>First Family Member : $<%= @lesson.price %>.00</li>
+<li>Second Family Member : $40.00</li>
+<li>Third Family Member : $30.00</li>
+<li>Fourth Family Member : $15.00</li>
+<li>All Other Family Members : $10.00</li>
+</ul>
+

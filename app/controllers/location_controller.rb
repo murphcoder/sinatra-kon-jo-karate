@@ -37,9 +37,9 @@ class LocationController < ApplicationController
     delete '/locations/:id' do
         location = Location.find(params[:id])
         location.lessons.each do |lesson|
-            lesson.delete
+            lesson.destroy
         end
-        location.delete
+        location.destroy
         redirect to '/login'
     end
 

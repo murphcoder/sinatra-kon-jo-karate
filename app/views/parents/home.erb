@@ -8,7 +8,7 @@
         <li>
         <a href="/students/<%= student.id %>"><%= student.name %></a>'s Classes<br>
         <ul>
-        <% lesson_array = student.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
+        <% lesson_array = student.lessons.uniq.sort_by {|t| [t.location.name, t.start_date, t.start_time]} %>
         <% lesson_array.each do |lesson| %>
             <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
         <% end %>

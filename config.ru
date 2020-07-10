@@ -9,5 +9,7 @@ use ParentController
 use StudentController
 use LocationController
 use LessonController
-### use OtherController3
+use InstructorController
+use BillingController
+use RecoveryController
 run ApplicationController

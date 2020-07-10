@@ -1,0 +1,40 @@
+<h2>Outstanding Transactions</h2>
+<form action="/billing/remove" method="post">
+<input id="hidden" type="hidden" name="_method" value="delete">
+<table class="bill">
+<tr>
+<th>Location</th>
+<th>Time</th>
+<th>Student</th>
+<th class="check top"><input type="submit" value="Remove?"></th>
+<th class="price">Price</th>
+</tr>
+<% unpaid = @user.transactions.select {|t| t.paid? == false} %>
+<% unpaid.each do |t| %>
+    <tr>
+    <td><%= t.lesson.location.name %></td>
+    <td><%= t.lesson.start_time.strftime("%-l:%M %p") %></td>
+    <td><%= t.student.name %></td>
+    <td class="check"><input type="checkbox" name="transactions[]" value="<%= t.id %>"></td>
+    <td class="price">$<%= t.cost %>.00</td>
+    </tr>
+    <% @user.balance += t.cost %>
+<% end %>
+<tr><td></td><td></td><td></td><td></td>
+<td class="price">
+Total
+</td>
+</tr>
+<tr><td></td><td></td><td></td><td></td>
+<td class="price">
+$<%= @user.balance %>.00
+</td>
+</tr>
+<tr><td></td><td></td><td></td>
+<td class="check bottom"><input type="submit" value="Remove?"></form></td>
+<td class="price">
+<form action="/billing/pay" method="get">
+<input type="submit" value="Pay Bill"></form>
+</td>
+</tr>
+</table>

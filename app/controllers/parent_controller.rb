@@ -24,6 +24,7 @@ class ParentController < ApplicationController
     get '/parents/new' do
         @user = Helpers.current_user(session)
         if @user.class == Instructor && @user.admin?
+            @lessons = Lesson.all
             erb :'/parents/create'
         else
             'You are not permitted to view this page.'
@@ -44,6 +45,7 @@ class ParentController < ApplicationController
         @user = Helpers.current_user(session)
         if (@user.class == Parent && @user.id == params[:id].to_i) || (@user.class == Instructor && @user.admin?)
             @parent = Parent.find(params[:id])
+            @lessons = Lesson.all
             erb :'/parents/edit'
         else
             'You are not permitted to view this page.'
@@ -52,10 +54,8 @@ class ParentController < ApplicationController
 
     post '/parents/new' do
         parent = Parent.create(params[:parent])
+        parent.balance = 0
         if !params[:student][:name].empty?
-            if params[:student][:address].empty?
-                params[:student][:address] = parent.address
-            end
             student = Student.create(params[:student])
             parent.students << student
         end
@@ -64,13 +64,16 @@ class ParentController < ApplicationController
 
     patch '/parents/:id' do
         parent = Parent.update(params[:id], params[:parent])
-        parent.students.clear
-        params[:students].each do |child|
-            parent.students << Student.find(child[:id])
+        parent.students.each do |student|
+            if params[:students] == nil || !params[:students].map {|s| s[:id].to_i}.include?(student.id)
+                student.transactions.each {|t| t.destroy}
+                student.destroy
+            end
         end
         if !params[:student][:name].empty?
             student = Student.create(params[:student])
             parent.students << student
+            make_transactions(params, student)
         end
         parent.save
         if parent == Helpers.current_user(session)
@@ -86,9 +89,10 @@ class ParentController < ApplicationController
             session.clear
         end
         parent.students.each do |student|
-            student.delete
+            student.transactions.each {|t| t.destroy}
+            student.destroy
         end
-        parent.delete
+        parent.destroy
         redirect to '/login'
     end
         

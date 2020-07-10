@@ -19,10 +19,8 @@
 <% end %>
 <h3><%= @parent.name %>'s Information</h3>
 Name : <%= @parent.name %><br>
-Email : <%= @parent.email %><br>
+Email : <a href="mailto:<%= @parent.email %>"><%= @parent.email %></a><br>
 Address : <%= @parent.address %><br>
 Cell Phone : <%= @parent.cell_phone %><br>
 <br>
-<a href="/parents/<%= @parent.id %>/edit">
-Edit Information
-</a>
+<a href="/parents/<%= @parent.id %>/edit">Edit Information</a>

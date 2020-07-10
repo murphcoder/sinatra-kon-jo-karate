@@ -1,0 +1,28 @@
+<h2>Sign Up Below</h2>
+<% if @user.students.empty? %>
+    <p>You have no students in our system</p>
+<% else %>
+    <form action="/billing/add" method="post">
+    <table>
+    <tr>
+    <td><label for="student">Select The Student For This Class</label></td>
+    <td><select name="signup[student]" id ="student">
+    <% @user.students.each do |student| %>
+        <option value="<%= student.id %>"><%= student.name %></option>
+    <% end %>
+    </select>
+    </td>
+    </tr>
+    </table>
+    <h3>Select Classes</h3>
+    <ul>
+    <% lesson_array = @lessons.sort_by {|t| [t.location.name, t.start_date, t.start_time]} %>
+    <% lesson_array.each do |lesson| %>
+        <li><input type="checkbox" id="lesson<%= lesson.id %>" name="lessons[][id]" value="<%= lesson.id %>">
+        <label for="<%= lesson.id %>"><%= lesson.location.name %>, <%= lesson.start_time.strftime("%-l:%M %p") %>, <%= lesson.start_date.strftime("%b, %-d, %Y") %> to <%= lesson.end_date.strftime("%b, %-d, %Y") %>, Price : $<%= lesson.price %>.00</option></li>
+    <% end %>
+    </ul>
+    <input type="submit" value="Sign Up For Class">
+    </form>
+<% end %>
+<p><a href="/students/new">Click here to add a student</a></p>

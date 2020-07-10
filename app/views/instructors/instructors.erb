@@ -1,0 +1,13 @@
+<% if @user.class == Instructor %>
+    <h2>All Instructors</h2>
+<% elsif @user.class == Parent %>
+    <h2>Your Instructors</h2>
+<% end %>
+<ul>
+<% @instructors.uniq.each do |instructor| %>
+    <li><a href="/instructors/<%= instructor.id %>"><%= instructor.name %></a></li>
+<% end %>
+</ul>
+<% if @user.class == Instructor %>
+    <p><a href="/instructors/new">Add Instructor</a>
+<% end %>

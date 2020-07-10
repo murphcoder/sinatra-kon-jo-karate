@@ -1,0 +1,12 @@
+<h2>Hello, <%= @user.name %></h2>
+<% if @user.lessons.empty? %>
+    <p>You have no classes currently in our system.</p>
+<% else %>
+    <h3>Your Schedule</h3>
+    <ul>
+    <% lesson_array = @user.lessons.sort_by {|t| [t.location.name, t.start_date, t.start_time]} %>
+    <% lesson_array.each do |lesson| %>
+        <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+    <% end %>
+    </ul>
+<% end %>

@@ -20,7 +20,10 @@ GEM
     eventmachine (1.2.7)
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
+    mail (2.7.1)
+      mini_mime (>= 0.1.1)
     method_source (1.0.0)
+    mini_mime (1.0.2)
     minitest (5.14.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
@@ -75,6 +78,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   bcrypt
+  mail
   pry
   rake
   require_all

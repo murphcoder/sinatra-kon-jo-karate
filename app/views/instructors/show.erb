@@ -1,0 +1,16 @@
+<h2><%= @instructor.name %></h2>
+<% if @user.class == Instructor && @user.admin? %>
+    <h3><%= @instructor.name %>'s Schedule</h3>
+    <ul>
+    <% lesson_array = @instructor.lessons.sort_by {|t| [t.location.name, t.start_date, t.start_time]} %>
+    <% lesson_array.each do |lesson| %>
+        <li><a href="/lessons/<%= lesson.id %>"><%= lesson.location.name %> at <%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+    <% end %>
+    </ul>
+<% end %>
+<p><%= @instructor.description %></p>
+<% if @user.class == Instructor && @user.admin? %>
+    Email : <a href="mailto:<%= @instructor.email %>"><%= @instructor.email %></a><br>
+    Cell Phone : <%= @instructor.cell_phone %><br>
+    <p><a href="/instructors/<%= @instructor.id %>/edit">Edit Information</a></p>
+<% end %>

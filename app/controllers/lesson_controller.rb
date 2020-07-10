@@ -3,6 +3,7 @@ class LessonController < ApplicationController
     def make_lesson(params, lesson)
         lesson.start_time = params[:lesson][:start_time]
         lesson.end_time = params[:lesson][:end_time]
+        lesson.price = params[:lesson][:price]
         lesson.start_date = "#{params[:lesson][:date][:start_year]}-#{params[:lesson][:date][:start_month]}-#{params[:lesson][:date][:start_day]}"
         lesson.end_date = "#{params[:lesson][:date][:end_year]}-#{params[:lesson][:date][:end_month]}-#{params[:lesson][:date][:end_day]}"
         if params[:lesson][:location] == "new"
@@ -12,12 +13,16 @@ class LessonController < ApplicationController
         end
         lesson.location = location
         lesson.students.clear
-        params[:lesson][:students].each do |student|
-            lesson.students << Student.find(student[:id])
+        if !params[:lesson][:students].nil?
+            params[:lesson][:students].each do |student|
+                lesson.students << Student.find(student[:id])
+            end
         end
         lesson.instructors.clear
-        params[:lesson][:instructors].each do |instructor|
-            lesson.instructors << Instructor.find(instructor[:id])
+        if !params[:lesson][:instructors].nil?
+            params[:lesson][:instructors].each do |instructor|
+                lesson.instructors << Instructor.find(instructor[:id])
+            end
         end
         lesson.save
         lesson
@@ -45,9 +50,21 @@ class LessonController < ApplicationController
         end
     end
 
+    get '/lessons/signup' do
+        @user = Helpers.current_user(session)
+        if @user.class == Parent
+            @lessons = Lesson.all
+            erb :'/lessons/signup'
+        else
+            'You are not permitted to view this page.'
+        end
+    end
+
     get '/lessons/:id' do
         @user = Helpers.current_user(session)
         @lesson = Lesson.find(params[:id])
+        email_array = @lesson.parents.uniq.collect {|e| e.email}
+        @email_link = "mailto:#{email_array.join(", ")}"
         erb :'/lessons/show'
     end
     
@@ -75,7 +92,7 @@ class LessonController < ApplicationController
     end
 
     delete '/lessons/:id' do
-        Lesson.delete(params[:id])
+        Lesson.destroy(params[:id])
         redirect to '/login'
     end
 

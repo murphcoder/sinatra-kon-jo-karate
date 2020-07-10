@@ -4,7 +4,7 @@
     <h2>Your Students</h2>
 <% end %>
 <ul>
-<% @user.students.each do |student| %>
+<% @user.students.uniq.each do |student| %>
     <li><a href="/students/<%= student.id %>"><%= student.name %></a></li>
 <% end %>
 </ul>

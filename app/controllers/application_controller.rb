@@ -1,11 +1,34 @@
 require './config/environment.rb'
-require 'time'
+require 'securerandom'
 
 class ApplicationController < Sinatra::Base
 
+    def make_transactions(params, student)
+        parent = student.parent
+        params[:lessons].each do |id|
+            transaction = Transaction.new
+            lesson = Lesson.find(id[:id])
+            transaction.lesson = lesson
+            transaction.student = student
+            if parent.students.count == 1
+                transaction.cost = lesson.price
+            elsif parent.students.count == 2
+                transaction.cost = 40
+            elsif parent.students.count == 3
+                transaction.cost = 30
+            elsif parent.students.count == 4
+                transaction.cost = 15
+            else
+                transaction.cost = 10
+            end
+            transaction[:paid?] = false
+            transaction.save
+        end
+    end
+
     configure do
         enable :sessions
-        set :session_secret, "BananaJim"
+        set :session_secret, "lX4iCMQygIKopCvepvJUUwiywmkvCn"
         set :public_folder, 'public'
         set :views, 'app/views'
     end
@@ -60,9 +83,11 @@ class ApplicationController < Sinatra::Base
 
     post '/signup' do
         parent = Parent.create(params[:parent])
+        parent.balance = 0
+        parent.save
         session[:user_id] = parent.id
         session[:user_class] = parent.class
-        redirect to '/home'
+        redirect to '/login'
     end
 
 end

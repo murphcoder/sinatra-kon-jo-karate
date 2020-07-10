@@ -1,12 +1,12 @@
 <h2>Locations Where You Have Classes</h2>
 <ul>
-<% @user.locations.each do |location| %>
+<% @user.locations.uniq.each do |location| %>
     <li><a href="/locations/<%= location.id %>"><%= location.name %></a><br>
     <ul>
         <% lesson_array = location.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
         <% lesson_array.each do |lesson| %>
             <% if lesson.parents.include?(@user) || lesson.instructors.include?(@user) %>
-                <li><a href="/lessons/<%= lesson.id %>"><%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+                <li><a href="/lessons/<%= lesson.id %>"><%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%B %-d, %Y") %> to <%= lesson.end_date.strftime("%B %-d, %Y") %>, Price : $<%= lesson.price %>.00</a></li>
             <% end %>
         <% end %>
     </ul>
@@ -20,7 +20,7 @@
         <ul>
             <% lesson_array = location.lessons.sort_by {|t| [t.start_date, t.start_time]} %>
             <% lesson_array.each do |lesson| %>
-                <li><a href="/lessons/<%= lesson.id %>"><%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%A, %B %-d, %Y") %> to <%= lesson.end_date.strftime("%A, %B %-d, %Y") %></a></li>
+                <li><a href="/lessons/<%= lesson.id %>"><%= lesson.start_time.strftime("%-l:%M %p") %> from <%= lesson.start_date.strftime("%B %-d, %Y") %> to <%= lesson.end_date.strftime("%B %-d, %Y") %>, Price : $<%= lesson.price %>.00</a></li>
             <% end %>
         </ul>
     <% end %>

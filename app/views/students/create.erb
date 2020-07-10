@@ -5,27 +5,16 @@
 <td><label for="name">Name</label></td>
 <td><input type="text" name="student[name]" id="name"></td>
 </tr>
-<tr>
-<td><label for="age">Age</label></td>
-<td><input type="text" name="student[age]" id="age"></td>
-</tr>
-<tr>
-<td><label for="grade">Grade</label></td>
-<td><input type="text" name="student[grade]" id="grade"></td>
-</tr>
-<tr>
-<td><label for="address">Address</label></td>
-<td><textarea id="address" name="student[address]" rows="4" cols="50">
-<% if @user.class == Parent %>
-<%= @user.address %>
-<% end %>
-</textarea></td>
-</tr>
-<tr>
-<td><label for="rank">Rank</label></td>
-<td><input type="text" name="student[rank]" id="rank"></td>
-</tr>
 </table>
+<h3>Select Classes</h3>
+<ul>
+<% lesson_array = @lessons.sort_by {|t| [t.location.name, t.start_date, t.start_time]} %>
+<% lesson_array.each do |lesson| %>
+    <li><input type="checkbox" id="lesson<%= lesson.id %>" name="lessons[][id]" value="<%= lesson.id %>">
+    <label for="<%= lesson.id %>"><%= lesson.location.name %>, <%= lesson.start_time.strftime("%-l:%M %p") %>, <%= lesson.start_date.strftime("%b, %-d, %Y") %> to <%= lesson.end_date.strftime("%b, %-d, %Y") %>, Price : $<%= lesson.price %>.00</option></li>
+<% end %>
+</ul>
+
 <% if @user.class == Instructor %>
     <h3>Add Parent</h3>
     <table>

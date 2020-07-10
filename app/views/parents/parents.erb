@@ -1,6 +1,6 @@
 <h2>Parents Of Your Students</h2>
 <ul>
-<% @user.parents.each do |parent| %>
+<% @user.parents.uniq.each do |parent| %>
     <li><a href="/parents/<%= parent.id %>"><%= parent.name %></a></li>
 <% end %>
 </ul>
