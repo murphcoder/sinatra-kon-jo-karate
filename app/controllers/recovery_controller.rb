@@ -11,13 +11,8 @@ class RecoveryController < ApplicationController
         end
         user.recovery = SecureRandom.hex(30)
         user.save
-        options = {:address => "smtp.gmail.com", 
-        :port => 587, 
-        :domain => "gmail.com", 
-        :user_name => "konjobilling@gmail.com", 
-        :password => "Aldh13an", 
-        :authentication => "plain", 
-        :enable_starttls_auto => true}
+        settings = File.new("email_settings.txt")
+        options = eval("{#{settings.read}}")
         Mail.defaults do
             delivery_method :smtp, options
         end
